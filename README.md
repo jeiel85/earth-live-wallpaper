@@ -4,8 +4,6 @@
 
 Built as a _Lively Wallpaper_ compatible Web Wallpaper. No backend server required. Runs entirely in the browser.
 
-![EarthLive Wallpaper](apps/wallpaper-web/public/preview.jpg)
-
 ## Features
 
 - **3D Earth globe** — Powered by CesiumJS, full-screen with smooth auto-rotation
