@@ -3,105 +3,355 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EarthLive Wallpaper</title>
-  <meta name="description" content="Real-time 3D Earth live wallpaper for Windows 11. Location-aware sunlight visualization with Lively Wallpaper integration." />
+  <title>EarthLive Wallpaper - Real-time 3D Earth for Windows 11</title>
+  <meta name="description" content="A gorgeous, real-time 3D Earth live wallpaper for Windows 11. Location-aware sunlight visualization, weather overlays, and Lively Wallpaper integration." />
   <meta property="og:title" content="EarthLive Wallpaper" />
   <meta property="og:description" content="Real-time 3D Earth live wallpaper for Windows 11" />
+  <meta property="og:image" content="hero-preview.png" />
   <meta property="og:type" content="website" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     :root {
       color-scheme: dark;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      --bg: #0b0d11;
-      --text: #e1e4e8;
-      --muted: #8b949e;
-      --accent: #58a6ff;
+      font-family: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+      --bg-dark: #030712;
+      --bg-card: rgba(255, 255, 255, 0.02);
+      --border-card: rgba(255, 255, 255, 0.06);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --accent-grad: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
     }
+
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: radial-gradient(circle at 50% -20%, #1e293b 0%, var(--bg-dark) 70%);
+      color: var(--text-main);
       line-height: 1.6;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 2rem;
+      padding: 3rem 1.5rem;
+      overflow-x: hidden;
+      position: relative;
     }
-    .container { max-width: 640px; text-align: center; }
+
+    /* Ambient background glows */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 960px;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header Logo */
+    .brand-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
     h1 {
-      font-size: 2.5rem;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.5rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 40%, #a5f3fc 70%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
     }
+
     .subtitle {
-      color: var(--muted);
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
+      color: var(--text-muted);
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
     }
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: opacity 0.2s;
-    }
-    .btn:hover { opacity: 0.85; }
-    .features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+
+    .cta-group {
+      display: flex;
       gap: 1rem;
-      margin: 2rem 0;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-primary {
+      background: var(--accent-grad);
+      color: #030712;
+      box-shadow: 0 4px 20px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Mockup Preview Container */
+    .preview-mockup {
+      position: relative;
+      width: 100%;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 10px;
+      border: 1px solid var(--border-card);
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.8),
+        0 0 50px rgba(56, 189, 248, 0.08);
+      backdrop-filter: blur(12px);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s;
+      margin-bottom: 4rem;
+    }
+
+    .preview-mockup:hover {
+      transform: translateY(-6px);
+      box-shadow: 
+        0 35px 60px -12px rgba(0, 0, 0, 0.9),
+        0 0 70px rgba(56, 189, 248, 0.18);
+    }
+
+    .preview-inner {
+      overflow: hidden;
+      border-radius: 10px;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    .preview-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+
+    .preview-mockup:hover .preview-img {
+      transform: scale(1.02);
+    }
+
+    /* Feature Grid Section */
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      margin-bottom: 4rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
       text-align: left;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .feature {
-      padding: 1rem;
-      border: 1px solid #21262d;
-      border-radius: 8px;
+
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(56, 189, 248, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(56, 189, 248, 0.05);
     }
-    .feature h3 { font-size: 0.95rem; margin-bottom: 0.25rem; }
-    .feature p { font-size: 0.85rem; color: var(--muted); }
-    .footer { margin-top: 3rem; font-size: 0.8rem; color: var(--muted); }
-    a { color: var(--accent); }
-    @media (max-width: 500px) {
-      .features { grid-template-columns: 1fr; }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .feature-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      width: 100%;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer a:hover {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 640px) {
+      body {
+        padding: 2rem 1rem;
+      }
+      .cta-group {
+        flex-direction: column;
+        width: 100%;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .footer {
+        flex-direction: column;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- Brand Logo -->
+    <img src="icon.png" alt="EarthLive Wallpaper Icon" class="brand-logo" />
+
+    <!-- Hero Title -->
     <h1>EarthLive Wallpaper</h1>
-    <p class="subtitle">Real-time 3D Earth live wallpaper for Windows 11</p>
+    <p class="subtitle">A stunning real-time 3D Earth live wallpaper for Windows 11. Location-aware sunlight boundary, responsive, and privacy-first.</p>
 
-    <a class="btn" href="https://github.com/jeiel85/earth-live-wallpaper" target="_blank">View on GitHub</a>
+    <!-- Call to Actions -->
+    <div class="cta-group">
+      <a class="btn btn-primary" href="https://github.com/jeiel85/earth-live-wallpaper/releases" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download Release
+      </a>
+      <a class="btn btn-secondary" href="https://github.com/jeiel85/earth-live-wallpaper" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        View on GitHub
+      </a>
+    </div>
 
-    <div class="features">
-      <div class="feature">
-        <h3>3D Earth Globe</h3>
-        <p>CesiumJS-powered globe with smooth auto-rotation</p>
-      </div>
-      <div class="feature">
-        <h3>Day / Night Terminator</h3>
-        <p>Real-time sunlight boundary based on your location</p>
-      </div>
-      <div class="feature">
-        <h3>Privacy First</h3>
-        <p>Location stored locally. No data sent to any backend</p>
-      </div>
-      <div class="feature">
-        <h3>Lively Wallpaper</h3>
-        <p>Compatible with Lively Wallpaper Web format</p>
+    <!-- Hero Mockup Preview -->
+    <div class="preview-mockup">
+      <div class="preview-inner">
+        <img src="hero-preview.png" alt="EarthLive Wallpaper Live Preview" class="preview-img" />
       </div>
     </div>
 
-    <p class="footer">
-      MIT License &middot; <a href="https://github.com/jeiel85/earth-live-wallpaper">github.com/jeiel85/earth-live-wallpaper</a>
-    </p>
+    <!-- Feature Section -->
+    <h2 class="section-title">Key Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>3D Earth Globe</h3>
+        <p>Powered by CesiumJS, rendering a highly detailed 3D globe with silky smooth auto-rotation and orbit control.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">☀️</div>
+        <h3>Sunlight Terminator</h3>
+        <p>Visualizes the real-time day and night boundary across the Earth, adapting instantly based on your local coordinates.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Privacy-First</h3>
+        <p>Your location data is stored entirely locally on your machine. Absolutely zero data is sent to external servers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <h3>Lively Integration</h3>
+        <p>Built directly for the Windows 11 Lively Wallpaper engine. Smooth operation with ultra-low hardware footprints.</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2026 EarthLive Wallpaper. MIT Licensed.</p>
+      <p>Created by <a href="https://github.com/jeiel85" target="_blank">jeiel85</a> &middot; <a href="https://github.com/jeiel85/earth-live-wallpaper">Source Code</a></p>
+    </footer>
   </div>
 </body>
 </html>
