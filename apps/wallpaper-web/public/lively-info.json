@@ -1,0 +1,12 @@
+{
+  "title": "EarthLive Wallpaper",
+  "description": "Real-time 3D Earth live wallpaper with day/night terminator, location-aware sunlight visualization, and optional weather overlays.",
+  "author": "Jeiel85",
+  "version": "0.1.0",
+  "type": "Web",
+  "supported": true,
+  "file": "index.html",
+  "preview": "preview.jpg",
+  "tags": ["earth", "globe", "real-time", "day-night", "location"],
+  "contact": "https://github.com/jeiel85/earth-live-wallpaper"
+}

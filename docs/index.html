@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EarthLive Wallpaper</title>
+  <meta name="description" content="Real-time 3D Earth live wallpaper for Windows 11. Location-aware sunlight visualization with Lively Wallpaper integration." />
+  <meta property="og:title" content="EarthLive Wallpaper" />
+  <meta property="og:description" content="Real-time 3D Earth live wallpaper for Windows 11" />
+  <meta property="og:type" content="website" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      color-scheme: dark;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --bg: #0b0d11;
+      --text: #e1e4e8;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .container { max-width: 640px; text-align: center; }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+    .feature {
+      padding: 1rem;
+      border: 1px solid #21262d;
+      border-radius: 8px;
+    }
+    .feature h3 { font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .feature p { font-size: 0.85rem; color: var(--muted); }
+    .footer { margin-top: 3rem; font-size: 0.8rem; color: var(--muted); }
+    a { color: var(--accent); }
+    @media (max-width: 500px) {
+      .features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>EarthLive Wallpaper</h1>
+    <p class="subtitle">Real-time 3D Earth live wallpaper for Windows 11</p>
+
+    <a class="btn" href="https://github.com/jeiel85/earth-live-wallpaper" target="_blank">View on GitHub</a>
+
+    <div class="features">
+      <div class="feature">
+        <h3>3D Earth Globe</h3>
+        <p>CesiumJS-powered globe with smooth auto-rotation</p>
+      </div>
+      <div class="feature">
+        <h3>Day / Night Terminator</h3>
+        <p>Real-time sunlight boundary based on your location</p>
+      </div>
+      <div class="feature">
+        <h3>Privacy First</h3>
+        <p>Location stored locally. No data sent to any backend</p>
+      </div>
+      <div class="feature">
+        <h3>Lively Wallpaper</h3>
+        <p>Compatible with Lively Wallpaper Web format</p>
+      </div>
+    </div>
+
+    <p class="footer">
+      MIT License &middot; <a href="https://github.com/jeiel85/earth-live-wallpaper">github.com/jeiel85/earth-live-wallpaper</a>
+    </p>
+  </div>
+</body>
+</html>
